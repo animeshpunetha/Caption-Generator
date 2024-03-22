@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Questrial&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Questrial&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+body {
+    
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 20px;
+    background-color: #212529;
+    color: #dfe1e5;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+.userInput,
+.generatebtn,
+.gen {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+    margin-bottom: 10px;
+
+}
+
+/* Input field styling */
+
+
+.custom-file-upload {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #343a40;
+    color: #dfe1e5;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.custom-file-upload:hover {
+    background-color: #495057;
+}
+
+/* Button styling */
+#generate {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4c9b66;
+    color: #dfe1e5;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: large;
+    font-weight: 900;
+}
+
+#generate:hover {
+    background-color: #495057;
+}
+
+/* Output styling */
+.gen p {
+    margin: 2px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #343a40;
+    color: #dfe1e5;
+    font-size: large;
+    font-family: "Questrial", sans-serif;
+
+}
+
+
+input#fileInput {
+    font-size: large;
+    margin: 2px;
+    padding: 20px;
+    /* background-color: aqua; */
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text Generator</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Caption Generator</h1>
+        <div class="userInput">
+            <label for="fileInput" class="custom-file-upload">Choose Image</label>
+            <input type="file" accept="image/*" id="fileInput">
+        </div>
+        <div class="generatebtn">
+            <button id="generate">Generate Caption</button>
+        </div>
+        <div class="gen">
+            <h2>Output:</h2>
+            <p id="outputText">Your caption will appear here.</p>
+        </div>
+    </div>
+
+    <!-- //javascript code -->
+
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+      <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+      
+        // Fetch your API_KEY
+        const API_KEY = "AIzaSyCOz_CroRcJtaB8ObiVUXRa1CG-czwCrHA";
+      
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const generate = document.querySelector("#generate");
+      
+        // Converts a File object to a GoogleGenerativeAI.Part object.
+        async function fileToGenerativePart(file) {
+          const base64EncodedDataPromise = new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.readAsDataURL(file);
+          });
+          return {
+            inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
+          };
+        }
+      
+        async function generateCaption() {
+          const fileInput = document.getElementById('fileInput');
+          if (fileInput.files.length === 0) {
+            alert('Please select an image.');
+            return;
+          }
+      
+          const imagePart = await fileToGenerativePart(fileInput.files[0]);
+      
+          try {
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const result = await model.generateContent([imagePart]);
+            const response = await result.response;
+            const caption = response.text();
+            document.querySelector('.gen').innerHTML = `<p>${caption}</p>`;
+          } catch (error) {
+            if (error.message.includes("404")) {
+              alert("Error: The selected model is deprecated. Please try again with a different model.");
+            } else {
+              console.error("Error generating caption:", error);
+              alert("An error occurred. Please try again later.");
+            }
+          }
+        }
+      
+        generate.addEventListener('click', generateCaption);
+      </script>
+      
+</body>
+
+</html>
